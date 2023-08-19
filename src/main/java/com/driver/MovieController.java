@@ -12,8 +12,7 @@ import java.util.Collection;
 @RequestMapping("/movies")
 public class MovieController {
 
-    @Autowired
-    MovieService movieService;
+    MovieService movieService = new MovieService();
 
     @PostMapping("/add-movie")
     public ResponseEntity<String> addMovie(@RequestBody Movie movie) {
