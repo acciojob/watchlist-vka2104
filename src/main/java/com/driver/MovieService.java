@@ -9,7 +9,8 @@ import java.util.Collection;
 @Service
 public class MovieService {
 
-    MovieRepository movieRepository = new MovieRepository();
+    @Autowired
+    MovieRepository movieRepository;
     public String addMovie(Movie movie) {
         boolean isMovieAdded = movieRepository.addMovie(movie);
         if(isMovieAdded) {
