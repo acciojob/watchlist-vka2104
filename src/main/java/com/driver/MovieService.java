@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class MovieService {
@@ -71,14 +72,14 @@ public class MovieService {
         return movieRepository.getDirectorByName(directorName);
     }
 
-    public ArrayList<String> getMoviesByDirectorName(String directorName) {
+    public List<String> getMoviesByDirectorName(String directorName) {
         return movieRepository.getMoviesByDirectorName(directorName);
     }
 
-    public Collection<Movie> findAllMovies() {
+    public List<Movie> findAllMovies() {
         return movieRepository.findAllMovies();
     }
-    private void deleteMappedMovies(ArrayList<String> movieNameList) {
+    private void deleteMappedMovies(List<String> movieNameList) {
         if(movieNameList != null) {
             for(String movieName: movieNameList) {
                 if(getMovieByName(movieName) != null) {
@@ -95,7 +96,7 @@ public class MovieService {
             return false;
         }
 
-        ArrayList<String> movieNameList = getMoviesByDirectorName(directorName);
+        List<String> movieNameList = getMoviesByDirectorName(directorName);
         deleteMappedMovies(movieNameList);
 
         if(getMoviesByDirectorName(directorName) != null) {

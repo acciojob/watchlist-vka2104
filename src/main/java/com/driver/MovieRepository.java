@@ -2,10 +2,7 @@ package com.driver;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class MovieRepository {
@@ -53,12 +50,12 @@ public class MovieRepository {
         return true;
     }
 
-    public ArrayList<String> getMoviesByDirectorName(String directorName) {
+    public List<String> getMoviesByDirectorName(String directorName) {
         return combineTable.get(directorName);
     }
 
-    public Collection<Movie> findAllMovies() {
-        return movieTable.values();
+    public List<Movie> findAllMovies() {
+        return new ArrayList<>(movieTable.values());
     }
     public Collection<ArrayList<String>> findAllMappedMovies() {
         return combineTable.values();
