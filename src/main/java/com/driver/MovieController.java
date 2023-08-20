@@ -19,9 +19,9 @@ public class MovieController {
     public ResponseEntity<String> addMovie(@RequestBody Movie movie) {
         String message = movieService.addMovie(movie);
         if(!message.isEmpty()) {
-            return ResponseEntity.ok(message);
+            return new ResponseEntity<>(message, HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An internal server error occurred.");
+            return new ResponseEntity<>("Movie already present in the List.", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -29,9 +29,9 @@ public class MovieController {
     public ResponseEntity<String> addDirector(@RequestBody Director director) {
         String message = movieService.addDirector(director);
         if(!message.isEmpty()) {
-            return ResponseEntity.ok(message);
+            return new ResponseEntity<>(message, HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An internal server error occurred.");
+            return new ResponseEntity<>("something went wrong", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -39,9 +39,9 @@ public class MovieController {
     public ResponseEntity<String> addMovieDirectorPair(@RequestParam("movieName") String movieName, @RequestParam("directorName") String directorName) {
         String message = movieService.addMovieDirectorPair(movieName, directorName);
         if(!message.isEmpty()) {
-            return ResponseEntity.ok(message);
+            return new ResponseEntity<>(message, HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An internal server error occurred.");
+            return new ResponseEntity<>("something went wrong", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -49,9 +49,9 @@ public class MovieController {
     public ResponseEntity<Movie> getMovieByName(@PathVariable("name") String movieName) {
         Movie movie = movieService.getMovieByName(movieName);
         if(movie != null) {
-            return ResponseEntity.ok(movie);
+            return new ResponseEntity<>(movie, HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -59,45 +59,45 @@ public class MovieController {
     public ResponseEntity<Director> getDirectorByName(@PathVariable("name") String directorName) {
         Director director = movieService.getDirectorByName(directorName);
         if(director != null) {
-            return ResponseEntity.ok(director);
+            return new ResponseEntity<>(director, HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
     @GetMapping("/get-movies-by-director-name/{director}")
     public ResponseEntity<ArrayList<String>> getMoviesByDirectorName(@PathVariable("director") String directorName) {
         ArrayList<String> movies = movieService.getMoviesByDirectorName(directorName);
         if(movies != null) {
-            return ResponseEntity.ok(movies);
+            return new ResponseEntity<>(movies, HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
     @GetMapping("/get-all-movies")
     public ResponseEntity<Collection<Movie>> findAllMovies() {
         Collection<Movie> movies = movieService.findAllMovies();
         if(movies != null) {
-            return ResponseEntity.ok(movies);
+            return new ResponseEntity<>(movies, HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
     @DeleteMapping("delete-director-by-name")
     public ResponseEntity<String> deleteDirectorByName(@RequestParam("directorName")String directorName) {
         boolean isDeleted = movieService.deleteDirectorByName(directorName);
         if(isDeleted) {
-            return ResponseEntity.ok("Deleted All Directors and their Movies.");
+            return new ResponseEntity<>("Deleted All Directors and their Movies.", HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Director not found or not able to delete.");
+            return new ResponseEntity<>("Director not found or not able to delete.", HttpStatus.BAD_REQUEST);
         }
     }
     @DeleteMapping("delete-all-directors")
     public ResponseEntity<String> deleteAllDirectors() {
         boolean isDeleted = movieService.deleteAllDirectors();
         if(isDeleted) {
-            return ResponseEntity.ok("Deleted All Directors and their Movies.");
+            return new ResponseEntity<>("Deleted All Directors and their Movies.", HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Director not found or not able to delete.");
+            return new ResponseEntity<>("Director not found or not able to delete.", HttpStatus.BAD_REQUEST);
         }
     }
 }
