@@ -54,8 +54,8 @@ public class MovieRepository {
         return combineTable.get(directorName);
     }
 
-    public List<Movie> findAllMovies() {
-        return new ArrayList<>(movieTable.values());
+    public List<String> findAllMovies() {
+        return new ArrayList<>(movieTable.keySet());
     }
     public Collection<ArrayList<String>> findAllMappedMovies() {
         return combineTable.values();
